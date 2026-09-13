@@ -2,11 +2,6 @@
    NANG CHICKEN MARKET — UNIFIED CUSTOMER + ENTERPRISE SYSTEM
    Single-source styles, organized by component and page group.
 
-   IMPORTANT FOR THE CURRENT GITHUB MARKUP:
-   theme.js listens for [data-theme-toggle]. Authentication-page
-   buttons in the current repository do not have that attribute.
-   CSS can standardise their appearance, but the HTML buttons must
-   carry data-theme-toggle for clicking them to change theme.
 ========================================================= */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Nunito:wght@700;800;900&display=swap');
@@ -348,7 +343,6 @@ section{
   justify-content:center;
   gap:.8rem;
 
-  color:#fff;
   font-size:1.38rem;
   font-weight:800;
   line-height:1.2;
@@ -365,100 +359,100 @@ section{
     box-shadow var(--transition);
 }
 
-/* Primary green buttons */
+/* Primary actions: same green everywhere */
 .btn,
 .staff-btn:not(.outline),
 .assign-staff-btn,
-.send-btn{
+.send-btn,
+.view-receipt-btn,
+.cart-drawer-btn.primary{
   background:var(--button-primary);
   border-color:var(--button-primary);
-  color:#fff;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
 }
 
 .btn:hover,
 .staff-btn:not(.outline):hover,
 .assign-staff-btn:hover,
-.send-btn:hover{
+.send-btn:hover,
+.view-receipt-btn:hover,
+.cart-drawer-btn.primary:hover{
   background:var(--button-primary-hover);
   border-color:var(--button-primary-hover);
-  color:#fff;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
 }
 
-/* Warning */
-.option-btn{
-  background:var(--warning);
-  border-color:var(--warning);
-  color:#fff;
+/* Secondary actions: consistent neutral/green outline */
+.option-btn,
+.staff-btn-outline,
+.staff-btn.outline,
+.orders-btn.outline,
+.cart-drawer-btn.outline{
+  background:var(--surface-solid);
+  border-color:var(--border-color);
+  color:var(--text)!important;
+  -webkit-text-fill-color:var(--text)!important;
 }
 
-/* Red / accent */
-.delete-btn,
-.view-receipt-btn,
+.option-btn:hover,
+.staff-btn-outline:hover,
+.staff-btn.outline:hover,
+.orders-btn.outline:hover,
+.cart-drawer-btn.outline:hover{
+  background:var(--primary-soft);
+  border-color:var(--primary);
+  color:var(--primary)!important;
+  -webkit-text-fill-color:var(--primary)!important;
+}
+
+/* Accent actions */
 .orders-btn,
 .shop-btn,
 .back{
   background:var(--accent);
   border-color:var(--accent);
-  color:#fff;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
 }
 
-.delete-btn:hover,
-.view-receipt-btn:hover,
 .orders-btn:hover,
 .shop-btn:hover,
 .back:hover{
   background:var(--accent-hover);
   border-color:var(--accent-hover);
-  color:#fff;
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
 }
 
-/* Neutral dark action */
+/* Destructive actions */
+.delete-btn,
+.staff-btn-danger{
+  background:var(--danger);
+  border-color:var(--danger);
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+.delete-btn:hover,
+.staff-btn-danger:hover{
+  background:var(--accent-hover);
+  border-color:var(--accent-hover);
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* Neutral utility action */
 .action-btn,
 .print-btn{
   background:var(--text);
   border-color:var(--text);
-  color:var(--surface-solid);
+  color:var(--surface-solid)!important;
+  -webkit-text-fill-color:var(--surface-solid)!important;
 }
 
-/* Outline buttons */
-.staff-btn-outline,
-.staff-btn.outline,
-.orders-btn.outline,
-.cart-drawer-btn.outline{
-  background:var(--surface);
-  border-color:var(--border-color);
-  color:var(--text)!important;
-}
-
-.staff-btn-outline:hover,
-.staff-btn.outline:hover,
-.orders-btn.outline:hover,
-.cart-drawer-btn.outline:hover{
-  background:var(--surface-2);
-  border-color:var(--primary);
-  color:var(--primary)!important;
-}
-
-/* Danger outline */
-.staff-btn-danger{
-  background:var(--danger-soft);
-  border-color:var(--danger);
-  color:var(--danger);
-}
-
-/* Colored cart drawer button */
-.cart-drawer-btn.primary{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:#fff;
-}
-
-.cart-drawer-btn.primary:hover{
-  background:var(--accent-hover);
-  border-color:var(--accent-hover);
-}
-
-/* Shared hover elevation */
+/* Shared elevation */
 .btn:hover,
 .option-btn:hover,
 .delete-btn:hover,
@@ -475,18 +469,18 @@ section{
 .print-btn:hover,
 .back:hover{
   transform:translateY(-3px);
+
   box-shadow:
     0 0 0 2px rgba(255,255,255,.10),
-    0 0 0 4px rgba(17,152,95,.17),
+    0 0 0 4px color-mix(in srgb,var(--button-primary) 18%,transparent),
     0 12px 28px rgba(0,0,0,.18);
 }
 
-/* Broad diagonal glare for colored buttons */
+/* Smooth diagonal glare on filled buttons only */
 .btn::before,
-.option-btn::before,
 .delete-btn::before,
 .action-btn::before,
-.orders-btn::before,
+.orders-btn:not(.outline)::before,
 .view-receipt-btn::before,
 .staff-btn:not(.outline)::before,
 .staff-btn-danger::before,
@@ -499,13 +493,17 @@ section{
 .profile-picture-edit::before,
 .portal-actions .btn::before{
   content:'';
+
   position:absolute;
   top:0;
   left:-100%;
+
   width:100%;
   height:100%;
+
   z-index:1;
   pointer-events:none;
+
   background:linear-gradient(
     120deg,
     transparent 0%,
@@ -516,14 +514,14 @@ section{
     transparent 70%,
     transparent 100%
   );
+
   transition:left .55s ease;
 }
 
 .btn:hover::before,
-.option-btn:hover::before,
 .delete-btn:hover::before,
 .action-btn:hover::before,
-.orders-btn:hover::before,
+.orders-btn:not(.outline):hover::before,
 .view-receipt-btn:hover::before,
 .staff-btn:not(.outline):hover::before,
 .staff-btn-danger:hover::before,
@@ -539,13 +537,11 @@ section{
 }
 
 .btn>*,
-.option-btn>*,
 .delete-btn>*,
 .action-btn>*,
 .orders-btn>*,
 .view-receipt-btn>*,
 .staff-btn>*,
-.staff-btn-outline>*,
 .staff-btn-danger>*,
 .cart-drawer-btn>*,
 .send-btn>*,
@@ -563,46 +559,8 @@ section{
   gap:1rem;
 }
 
-.flex-btn>*{flex:1}
-
-
-
-/* Enforce consistent foreground on filled buttons */
-.btn,
-.option-btn,
-.delete-btn,
-.action-btn,
-.orders-btn,
-.view-receipt-btn,
-.staff-btn:not(.outline),
-.staff-btn-danger,
-.cart-drawer-btn.primary,
-.send-btn,
-.assign-staff-btn,
-.shop-btn,
-.print-btn,
-.back,
-.portal-actions .btn{
-  color:#fff!important;
-  -webkit-text-fill-color:#fff!important;
-}
-
-.btn i,
-.option-btn i,
-.delete-btn i,
-.action-btn i,
-.orders-btn i,
-.view-receipt-btn i,
-.staff-btn:not(.outline) i,
-.staff-btn-danger i,
-.cart-drawer-btn.primary i,
-.send-btn i,
-.assign-staff-btn i,
-.shop-btn i,
-.print-btn i,
-.back i,
-.portal-actions .btn i{
-  color:inherit!important;
+.flex-btn>*{
+  flex:1;
 }
 
 /* =========================================================
@@ -733,27 +691,34 @@ input[type="number"]::-webkit-outer-spin-button{
 
 
 /* =========================================================
-   6. THEME TOGGLES — UNIFIED EVERYWHERE
+   6. THEME TOGGLES
 ========================================================= */
 
 .theme-toggle,
 .floating-theme-toggle{
   min-width:78px;
   min-height:42px;
-  padding:.8rem 1.15rem;
+  padding:.8rem 1.1rem;
+
   border:1px solid var(--border-color);
   border-radius:999px;
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:.65rem;
+
   background:var(--surface-solid);
   color:var(--text);
+
   font-size:1.25rem;
   font-weight:800;
   line-height:1;
+
   cursor:pointer;
+
   box-shadow:0 5px 16px rgba(20,38,26,.07);
+
   transition:
     transform var(--transition),
     background-color var(--transition),
@@ -767,6 +732,7 @@ input[type="number"]::-webkit-outer-spin-button{
   transform:translateY(-2px);
   border-color:var(--primary);
   background:var(--surface-2);
+
   box-shadow:
     0 0 0 3px color-mix(in srgb,var(--primary) 14%,transparent),
     0 9px 24px rgba(0,0,0,.14);
@@ -775,9 +741,12 @@ input[type="number"]::-webkit-outer-spin-button{
 .theme-toggle i,
 .floating-theme-toggle i{
   width:1.5rem;
+
   display:inline-grid;
   place-items:center;
+
   color:var(--accent);
+
   font-size:1.45rem;
   line-height:1;
 }
@@ -787,25 +756,6 @@ input[type="number"]::-webkit-outer-spin-button{
   min-width:3.4rem;
   line-height:1;
   text-align:left;
-}
-
-/* Index/auth markup says "Dark Mode"; show only Light/Dark visually */
-.floating-theme-toggle span:not(.theme-toggle-label){
-  width:3.4rem;
-  overflow:hidden;
-  font-size:0;
-  line-height:1;
-  text-align:left;
-}
-
-.floating-theme-toggle span:not(.theme-toggle-label)::after{
-  content:'Light';
-  font-size:1.25rem;
-  font-weight:800;
-}
-
-:root[data-theme="dark"] .floating-theme-toggle span:not(.theme-toggle-label)::after{
-  content:'Dark';
 }
 
 .theme-toggle-floating,
@@ -818,12 +768,9 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .floating-theme-toggle{
   height:44px;
-}
 
-.portal-page .floating-theme-toggle,
-.auth-page .floating-theme-toggle{
-  border-color:color-mix(in srgb,var(--border-color) 80%,white 20%);
   background:color-mix(in srgb,var(--surface-solid) 94%,transparent);
+
   -webkit-backdrop-filter:blur(14px) saturate(145%);
   backdrop-filter:blur(14px) saturate(145%);
 }
@@ -2951,38 +2898,45 @@ input[type="number"]::-webkit-outer-spin-button{
 
 
 /* =========================================================
-   18. ENTERPRISE PORTAL — MATCH CUSTOMER PORTAL
+   18. ENTERPRISE PORTAL
+   Uses the same visual language as the customer portal.
 ========================================================= */
 
 .staff-topbar{
   position:sticky;
   top:0;
   z-index:5000;
+
   border-bottom:1px solid var(--border-color);
+
   background:color-mix(in srgb,var(--surface-solid) 88%,transparent);
   box-shadow:0 8px 34px rgba(28,42,32,.08);
+
   -webkit-backdrop-filter:blur(18px) saturate(150%);
   backdrop-filter:blur(18px) saturate(150%);
 }
 
 .staff-topbar-inner{
   position:relative;
+
   width:min(100%,1280px);
   min-height:86px;
   margin:auto;
   padding:1.2rem 1.4rem;
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
+
+  display:flex;
   align-items:center;
+  justify-content:space-between;
   gap:2rem;
 }
 
 .staff-header-logo{
-  grid-column:1;
+  flex:0 0 auto;
+
   display:inline-flex;
   align-items:center;
-  justify-self:start;
   gap:1.5rem;
+
   min-width:0;
 }
 
@@ -2993,8 +2947,10 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-header-logo .logo-text{
   color:var(--primary);
+
   font:900 2.4rem/1 'Nunito',sans-serif;
   white-space:nowrap;
+
   transition:color .4s ease;
 }
 
@@ -3004,53 +2960,54 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-portal-label{
   padding-left:1rem;
+
   border-left:1px solid var(--border-color);
+
   color:var(--text-faint);
+
   font-size:1.25rem;
   font-weight:800;
   white-space:nowrap;
 }
 
+/* Centered nav, matching customer header */
 .staff-nav{
-  grid-column:2;
-  position:static;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+
   padding:.45rem;
+
   display:flex;
   align-items:center;
   justify-content:center;
   gap:.4rem;
+
   border:1px solid var(--border-color);
   border-radius:999px;
+
   background:var(--surface-2);
-}
-
-/* Current markup keeps the toggle inside nav; visually move it right */
-.staff-nav>.theme-toggle{
-  position:absolute;
-  top:50%;
-  right:1.4rem;
-  transform:translateY(-50%);
-  min-width:78px;
-  background:var(--surface-solid);
-}
-
-.staff-nav>.theme-toggle:hover{
-  transform:translateY(calc(-50% - 2px));
 }
 
 .staff-nav a{
   position:relative;
+
   min-height:42px;
   padding:0 1.35rem;
+
   display:inline-flex;
   align-items:center;
   justify-content:center;
   gap:.7rem;
+
   border-radius:999px;
+
   color:var(--text-soft);
+
   font-size:1.34rem;
   font-weight:700;
   line-height:1;
+
   transition:
     color var(--transition),
     background-color var(--transition),
@@ -3061,18 +3018,37 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-nav a.is-active{
   background:var(--surface-solid);
   color:var(--primary);
+
   box-shadow:0 4px 14px rgba(20,40,27,.08);
 }
 
 .staff-nav a.is-active::after{
   content:'';
+
   position:absolute;
   right:1.4rem;
   bottom:.52rem;
   left:1.4rem;
+
   height:2px;
+
   border-radius:2px;
+
   background:linear-gradient(90deg,var(--primary),var(--accent));
+}
+
+/* Right-side actions match the customer header */
+.staff-header-actions{
+  margin-left:auto;
+  flex:0 0 auto;
+
+  display:inline-flex;
+  align-items:center;
+  gap:.65rem;
+}
+
+.staff-header-actions .theme-toggle{
+  min-width:78px;
 }
 
 :root:not([data-theme="dark"]) .staff-topbar{
@@ -3081,7 +3057,7 @@ input[type="number"]::-webkit-outer-spin-button{
   box-shadow:0 4px 18px rgba(82,67,45,.06);
 }
 
-:root:not([data-theme="dark"]) .staff-nav>.theme-toggle{
+:root:not([data-theme="dark"]) .staff-header-actions .theme-toggle{
   background:rgba(255,255,255,.82);
   border-color:#e7dfd2;
 }
@@ -3095,10 +3071,13 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-card,
 .sales-card{
   overflow:hidden;
+
   border:1px solid var(--border-color);
   border-radius:var(--radius-lg);
+
   background:var(--surface);
   box-shadow:var(--glow);
+
   -webkit-backdrop-filter:blur(9px);
   backdrop-filter:blur(9px);
 }
@@ -3109,13 +3088,17 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-card-head{
   padding:2rem;
+
   border-bottom:1px solid var(--border-color);
+
   background:var(--surface-2);
 }
 
 .staff-card-head h1{
   margin:0 0 .5rem;
+
   color:var(--heading);
+
   font-size:2.4rem;
 }
 
@@ -3124,7 +3107,9 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-section-head p,
 .staff-filter-head p{
   margin:0;
+
   color:var(--text-soft);
+
   font-size:1.35rem;
 }
 
@@ -3135,8 +3120,10 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-filter{
   margin-bottom:1.8rem;
   padding:1.8rem;
+
   border:1px solid var(--border-color);
   border-radius:18px;
+
   background:var(--surface);
   box-shadow:var(--glow);
 }
@@ -3149,7 +3136,9 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-edit-head h2,
 .staff-section-head h2{
   margin:0 0 .5rem;
+
   color:var(--heading);
+
   font-size:1.9rem;
 }
 
@@ -3174,6 +3163,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-actions-row{
   margin-top:1.4rem;
+
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:1.4rem;
@@ -3208,6 +3198,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-actions{
   margin-top:1.4rem;
+
   display:flex;
   justify-content:flex-end;
 }
@@ -3216,6 +3207,7 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-section{
   margin-top:2rem;
   padding-top:2rem;
+
   border-top:1px solid var(--border-color);
 }
 
@@ -3236,8 +3228,10 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-items-tablewrap{
   margin-top:1.4rem;
   overflow-x:auto;
+
   border:1px solid var(--border-color);
   border-radius:14px;
+
   background:var(--surface-solid);
 }
 
@@ -3248,7 +3242,9 @@ input[type="number"]::-webkit-outer-spin-button{
 .staff-table,
 .sales-items-table{
   width:100%;
+
   border-collapse:collapse;
+
   background:var(--surface);
 }
 
@@ -3257,7 +3253,9 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-items-table th,
 .sales-items-table td{
   padding:1.1rem 1.2rem;
+
   border-bottom:1px solid var(--border-color);
+
   font-size:1.3rem;
   text-align:center;
 }
@@ -3266,6 +3264,7 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-items-table thead th{
   background:linear-gradient(135deg,#172b20,#244331);
   color:#fff;
+
   font-size:1.15rem;
   font-weight:800;
   letter-spacing:.06em;
@@ -3284,7 +3283,9 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-empty{
   padding:2rem!important;
+
   color:var(--text-soft);
+
   text-align:center!important;
 }
 
@@ -3297,12 +3298,17 @@ input[type="number"]::-webkit-outer-spin-button{
 .ctrl-btn{
   width:36px;
   height:36px;
+
   border:1px solid var(--border-color);
   border-radius:10px;
+
   background:var(--surface-2);
   color:var(--text);
+
   font-weight:900;
+
   cursor:pointer;
+
   transition:
     transform var(--transition),
     border-color var(--transition),
@@ -3312,7 +3318,9 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .ctrl-btn:hover{
   transform:translateY(-2px);
+
   border-color:var(--primary);
+
   background:var(--primary-soft);
   color:var(--primary);
 }
@@ -3338,14 +3346,18 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-head{
   width:100%;
   padding:1.6rem 1.8rem;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:1rem;
+
   background:transparent;
   color:var(--text);
+
   cursor:pointer;
   text-align:left;
+
   transition:background-color var(--transition);
 }
 
@@ -3355,6 +3367,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-head-left{
   min-width:230px;
+
   display:grid;
   gap:.5rem;
 }
@@ -3368,12 +3381,14 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-head-line{
   color:var(--heading);
+
   font-size:1.6rem;
   font-weight:900;
 }
 
 .sales-sub-line{
   color:var(--text-soft);
+
   font-size:1.25rem;
   font-weight:700;
 }
@@ -3391,9 +3406,12 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-total-pill,
 .sales-chevron{
   padding:.6rem .9rem;
+
   border:1px solid var(--border-color);
   border-radius:999px;
+
   background:var(--surface-2);
+
   font-size:1.2rem;
   font-weight:800;
 }
@@ -3402,6 +3420,7 @@ input[type="number"]::-webkit-outer-spin-button{
   width:30px;
   height:30px;
   padding:0;
+
   display:grid;
   place-items:center;
 }
@@ -3413,7 +3432,9 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-panel{
   max-height:0;
   overflow:hidden;
+
   border-top:1px solid var(--border-color);
+
   transition:max-height 240ms ease;
 }
 
@@ -3424,8 +3445,10 @@ input[type="number"]::-webkit-outer-spin-button{
 .sales-meta{
   margin-bottom:1.2rem;
   padding:1.2rem;
+
   border:1px solid var(--border-color);
   border-radius:var(--radius-sm);
+
   background:var(--surface-2);
 }
 
@@ -3437,8 +3460,10 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-meta-item{
   padding:1rem;
+
   border:1px solid var(--border-color);
   border-radius:var(--radius-sm);
+
   background:var(--surface);
 }
 
@@ -3453,6 +3478,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-meta-item .value{
   color:var(--text);
+
   font-size:1.35rem;
   font-weight:800;
 }
@@ -3472,6 +3498,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-items-head .title{
   margin:1.4rem 0 .8rem;
+
   font-size:1.5rem;
   text-align:left;
 }
@@ -3482,16 +3509,20 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .sales-actions{
   padding-top:1.2rem;
+
   display:flex;
   justify-content:flex-end;
 }
 
 .sales-empty{
   padding:2rem;
+
   border:1px dashed var(--border-strong);
   border-radius:var(--radius);
+
   background:var(--surface-2);
   color:var(--text-soft);
+
   text-align:center;
   font-weight:700;
 }
@@ -3503,18 +3534,24 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-footer{
   position:relative;
+
   margin-top:0;
+
   border-top:1px solid var(--border-color);
+
   background:var(--surface-solid);
 }
 
 .staff-footer::before{
   content:'';
+
   position:absolute;
   top:0;
   right:0;
   left:0;
+
   height:3px;
+
   background:linear-gradient(90deg,var(--primary),var(--accent),var(--primary));
 }
 
@@ -3522,11 +3559,14 @@ input[type="number"]::-webkit-outer-spin-button{
   width:min(100%,var(--content-width));
   margin:auto;
   padding:1.8rem 2rem;
+
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:1.2rem;
+
   color:var(--text-faint);
+
   font-size:1.2rem;
 }
 
@@ -3542,9 +3582,12 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .staff-logout{
   padding:.7rem 1rem;
+
   border-radius:var(--radius-sm);
+
   color:var(--accent);
   font-weight:800;
+
   transition:
     background-color var(--transition),
     color var(--transition);
@@ -4259,12 +4302,21 @@ input[type="number"]::-webkit-outer-spin-button{
 }
 
 .swal2-confirm{
-  background:var(--primary)!important;
+  background:var(--button-primary)!important;
   color:#fff!important;
 }
 
 .swal2-confirm:hover{
-  background:var(--primary-hover)!important;
+  background:var(--button-primary-hover)!important;
+}
+
+.swal2-confirm-danger{
+  background:var(--danger)!important;
+  color:#fff!important;
+}
+
+.swal2-confirm-danger:hover{
+  background:var(--accent-hover)!important;
 }
 
 .swal2-deny{
@@ -4313,32 +4365,25 @@ input[type="number"]::-webkit-outer-spin-button{
 @media(max-width:900px){
 
   .staff-topbar-inner{
-    display:flex;
     flex-wrap:wrap;
+    gap:1rem;
   }
 
   .staff-header-logo{
     flex:1 1 auto;
   }
 
+  .staff-header-actions{
+    margin-left:auto;
+  }
+
   .staff-nav{
     position:static;
-    width:100%;
     order:3;
+    width:100%;
+    transform:none;
     overflow-x:auto;
     justify-content:flex-start;
-    padding-right:1rem;
-  }
-
-  .staff-nav>.theme-toggle{
-    position:absolute;
-    top:1.6rem;
-    right:1.4rem;
-    transform:none;
-  }
-
-  .staff-nav>.theme-toggle:hover{
-    transform:translateY(-2px);
   }
 
   .header .flex{
@@ -4390,16 +4435,6 @@ input[type="number"]::-webkit-outer-spin-button{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .staff-topbar-inner{
-    align-items:flex-start;
-    flex-wrap:wrap;
-  }
-
-  .staff-nav{
-    width:100%;
-    overflow-x:auto;
-    justify-content:flex-start;
-  }
 }
 
 @media(max-width:780px){
@@ -4482,9 +4517,9 @@ input[type="number"]::-webkit-outer-spin-button{
   }
 
   .header .icons>.theme-toggle{
-    width:40px;
-    min-width:40px;
-    padding:0;
+    width:auto;
+    min-width:70px;
+    padding:0 .9rem;
   }
 
   .theme-toggle-label{
@@ -4492,7 +4527,8 @@ input[type="number"]::-webkit-outer-spin-button{
   }
 
   .theme-toggle,
-  .floating-theme-toggle{
+  .floating-theme-toggle,
+  .staff-header-actions .theme-toggle{
     min-width:70px;
     padding-inline:.9rem;
   }
@@ -4739,7 +4775,7 @@ input[type="number"]::-webkit-outer-spin-button{
 
 .theme-toggle,
 .floating-theme-toggle,
-.staff-nav>.theme-toggle{
+.staff-header-actions .theme-toggle{
   isolation:isolate;
   overflow:visible;
   -webkit-text-fill-color:currentColor;
